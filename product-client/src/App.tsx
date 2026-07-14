@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { useMsal } from "@azure/msal-react";
-import { InteractionStatus } from "@azure/msal-browser";
 import { loginRequest } from './authConfig';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -34,7 +31,7 @@ function App() {
                         }
                     />
                     <Route path="signin-oidc" element={<SigninOidc />} />
-                    <Route path="signout-callback-oidc" element={<SignoutCallback />} />
+                    <Route path="signout-callback-oidc" element={<SignoutCallback additionalLogoutUris={['http://localhost:5173/signout-callback-oidc']} />} />
                     <Route path="logged-out" element={<LoggedOut />} />
                 </Route>
             </Routes>

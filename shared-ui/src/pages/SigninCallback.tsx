@@ -24,17 +24,32 @@ export const SigninCallback = ({
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
+        const isIframe = window.self !== window.top;
+
         const handleRedirectResult = async () => {
             try {
                 const result = await instance.handleRedirectPromise();
+                if (isIframe) {
+                    // Inside iframe (e.g. silent SSO), do not perform navigation or state updates
+                    return;
+                }
                 if (result && result.accessToken) {
+                    if (result.account) {
+                        document.cookie = `sso_login_hint=${encodeURIComponent(result.account.username)}; path=/; max-age=31536000; SameSite=Lax`;
+                    }
                     await onSuccess(result);
                 } else {
                     const accs = instance.getAllAccounts();
+                    if (accs.length > 0 && accs[0]) {
+                        document.cookie = `sso_login_hint=${encodeURIComponent(accs[0].username)}; path=/; max-age=31536000; SameSite=Lax`;
+                    }
                     navigate(accs.length > 0 ? fallbackRedirectPath : '/', { replace: true });
                 }
             } catch (error: any) {
                 console.error("Sign-in redirect error:", error);
+                if (isIframe) {
+                    return;
+                }
                 setStatus('error');
                 setErrorMessage(error?.message || 'An error occurred during sign-in.');
                 if (onError) onError(error);
@@ -44,9 +59,13 @@ export const SigninCallback = ({
         handleRedirectResult();
 
         const callbackId = instance.addEventCallback((event) => {
+            if (isIframe) return; // Skip in iframe context
             if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
                 const result = event.payload as AuthenticationResult;
                 if (result.accessToken) {
+                    if (result.account) {
+                        document.cookie = `sso_login_hint=${encodeURIComponent(result.account.username)}; path=/; max-age=31536000; SameSite=Lax`;
+                    }
                     onSuccess(result);
                 }
             }

@@ -8,7 +8,7 @@ import {
     fetchBrands,
     setAuthToken,
 } from '../services/productApi';
-import { loginRequest, apiRequest } from '../authConfig';
+import { apiRequest } from '../authConfig';
 
 /**
  * Acquires an access token silently using MSAL and sets it on the API client.

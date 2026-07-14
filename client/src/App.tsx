@@ -23,7 +23,7 @@ function App() {
                         } 
                     />
                     <Route path="signin-oidc" element={<SigninOidc />} />
-                    <Route path="signout-callback-oidc" element={<SignoutCallback />} />
+                    <Route path="signout-callback-oidc" element={<SignoutCallback additionalLogoutUris={['http://localhost:5174/signout-callback-oidc']} />} />
                     <Route path="logged-out" element={<LoggedOut />} />
                 </Route>
             </Routes>
