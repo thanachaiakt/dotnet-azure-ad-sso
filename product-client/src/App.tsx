@@ -8,37 +8,12 @@ import { Home } from './pages/Home';
 import { ProductListingPage } from './pages/ProductListingPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { SigninOidc } from './pages/SigninOidc';
-import { ProtectedRoute, SignoutCallback, LoggedOut } from '@sso/shared-ui';
-
-const AutoLogin = () => {
-    const { instance, accounts, inProgress } = useMsal();
-
-    useEffect(() => {
-        // Attempt silent SSO if the user is not logged in here but might be logged in on the IDP (Azure AD)
-        if (accounts.length === 0 && inProgress === InteractionStatus.None) {
-            const hasAttempted = sessionStorage.getItem('autoLoginAttempted');
-            
-            if (!hasAttempted) {
-                sessionStorage.setItem('autoLoginAttempted', 'true');
-                
-                instance.ssoSilent(loginRequest).catch(error => {
-                    console.debug("Silent SSO failed, falling back to loginRedirect:", error);
-                    // Force a redirect to Azure AD.
-                    // If they have an active session (e.g. from the other client app), 
-                    // Azure AD will instantly redirect them back logged in.
-                    instance.loginRedirect(loginRequest).catch(console.error);
-                });
-            }
-        }
-    }, [instance, accounts.length, inProgress]);
-
-    return null;
-};
+import { ProtectedRoute, SignoutCallback, LoggedOut, AutoLogin } from '@sso/shared-ui';
 
 function App() {
     return (
         <BrowserRouter>
-            <AutoLogin />
+            <AutoLogin loginRequest={loginRequest} />
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />

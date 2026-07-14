@@ -3,13 +3,14 @@ import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { SigninOidc } from './pages/SigninOidc';
-import { ProtectedRoute, SignoutCallback, LoggedOut } from '@sso/shared-ui';
+import { ProtectedRoute, SignoutCallback, LoggedOut, AutoLogin } from '@sso/shared-ui';
 
 import './App.css';
 
 function App() {
     return (
         <BrowserRouter>
+            <AutoLogin />
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />

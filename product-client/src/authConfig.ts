@@ -45,6 +45,10 @@ export const loginRequest = {
     scopes: ["openid", "profile", "email", "User.Read"]
 };
 
+export const apiRequest = {
+    scopes: [`${clientId}/.default`]
+};
+
 export const productApiConfig = {
     baseUrl: import.meta.env.VITE_APP_PRODUCT_API_ENDPOINT || "",
 };

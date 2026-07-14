@@ -1,6 +1,7 @@
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { Outlet, Link, useNavigate } from "react-router";
 import { loginRequest } from "../authConfig";
+import { GlobalLoading } from "@sso/shared-ui";
 
 export const Layout = () => {
     const { instance, accounts } = useMsal();
@@ -25,6 +26,7 @@ export const Layout = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <GlobalLoading />
             {/* ── Navigation ── */}
             <nav className="nav">
                 <div className="nav-brand">

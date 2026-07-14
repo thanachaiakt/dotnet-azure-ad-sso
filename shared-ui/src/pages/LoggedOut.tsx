@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 export interface LoggedOutProps {
@@ -6,6 +7,14 @@ export interface LoggedOutProps {
 
 export const LoggedOut = ({ homePath = '/' }: LoggedOutProps) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Automatically redirect to home after a brief delay so the user doesn't get stuck
+        const timer = setTimeout(() => {
+            navigate(homePath, { replace: true });
+        }, 1500); // 1.5 second delay to show the "Signed Out" message briefly
+        return () => clearTimeout(timer);
+    }, [navigate, homePath]);
 
     return (
         <div className="page-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>

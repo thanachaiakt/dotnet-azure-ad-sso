@@ -23,6 +23,7 @@ export const SignoutCallback = ({ onLogout, redirectPath = '/logged-out' }: Sign
             try {
                 await instance.logoutRedirect({
                     account: accounts[0] ?? null,
+                    postLogoutRedirectUri: window.location.origin + '/signin-oidc'
                 });
             } catch (error) {
                 console.warn("MSAL logoutRedirect failed, falling back to clearCache:", error);

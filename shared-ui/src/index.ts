@@ -1,4 +1,6 @@
 export { ProtectedRoute } from './components/ProtectedRoute';
+export { AutoLogin } from './components/AutoLogin';
+export { GlobalLoading } from './components/GlobalLoading';
 export type { SigninCallbackProps } from './pages/SigninCallback';
 export { SigninCallback } from './pages/SigninCallback';
 export type { SignoutCallbackProps } from './pages/SignoutCallback';

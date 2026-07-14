@@ -8,7 +8,7 @@ import {
     fetchBrands,
     setAuthToken,
 } from '../services/productApi';
-import { loginRequest } from '../authConfig';
+import { loginRequest, apiRequest } from '../authConfig';
 
 /**
  * Acquires an access token silently using MSAL and sets it on the API client.
@@ -20,7 +20,7 @@ const useAccessToken = () => {
         if (accounts.length === 0) return null;
         try {
             const response = await instance.acquireTokenSilent({
-                ...loginRequest,
+                ...apiRequest,
                 account: accounts[0],
             });
             setAuthToken(response.accessToken);
@@ -30,7 +30,7 @@ const useAccessToken = () => {
             // Fallback to interactive login
             try {
                 const response = await instance.acquireTokenPopup({
-                    ...loginRequest,
+                    ...apiRequest,
                     account: accounts[0],
                 });
                 setAuthToken(response.accessToken);
