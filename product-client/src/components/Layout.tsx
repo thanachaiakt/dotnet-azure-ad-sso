@@ -1,7 +1,6 @@
 import { Outlet, useNavigate } from "react-router";
 import { loginRequest } from "../authConfig";
-import { ThemeToggle } from "./ThemeToggle";
-import { GlobalLoading, Navbar } from "@sso/shared-ui";
+import { GlobalLoading, Navbar, ThemeToggle } from "@sso/shared-ui";
 import type { NavbarLink } from "@sso/shared-ui";
 
 export const Layout = () => {
@@ -10,7 +9,7 @@ export const Layout = () => {
     const navLinks: NavbarLink[] = [
         { to: "/", label: "Home", external: true },
         { to: "/dashboard", label: "Dashboard", authenticatedOnly: true, external: true },
-        { to: "/products", label: "Products", authenticatedOnly: true }
+        { to: "/", label: "Product", authenticatedOnly: true }
     ];
 
     const handleLogout = () => {

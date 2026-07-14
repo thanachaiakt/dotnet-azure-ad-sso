@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router";
 import { loginRequest } from "../authConfig";
-import { GlobalLoading, Navbar } from "@sso/shared-ui";
+import { GlobalLoading, Navbar, ThemeToggle } from "@sso/shared-ui";
 import type { NavbarLink } from "@sso/shared-ui";
 
 export const Layout = () => {
@@ -24,6 +24,7 @@ export const Layout = () => {
                 brandIcon="🔐"
                 brandText="Azure SSO"
                 links={navLinks}
+                actions={<ThemeToggle />}
                 loginRequest={loginRequest}
                 redirectUri="http://localhost:5173/signin-oidc"
                 onLogout={handleLogout}
