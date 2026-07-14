@@ -3,8 +3,14 @@ import { type Configuration, LogLevel } from "@azure/msal-browser";
 const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 const tenantId = import.meta.env.VITE_APP_TENANT_ID;
 const authority = `https://login.microsoftonline.com/${tenantId}`;
-const redirectUri = import.meta.env.VITE_APP_REDIRECT_URI;
-const postLogoutRedirectUri = import.meta.env.VITE_APP_POST_LOGOUT_REDIRECT_URI;
+const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5174';
+const redirectUri = origin.includes("5173") 
+    ? "http://localhost:5173/product/signin-oidc" 
+    : (import.meta.env.VITE_APP_REDIRECT_URI || "http://localhost:5174/signin-oidc");
+
+const postLogoutRedirectUri = origin.includes("5173")
+    ? "http://localhost:5173/product/logged-out"
+    : (import.meta.env.VITE_APP_POST_LOGOUT_REDIRECT_URI || "http://localhost:5174/logged-out");
 
 export const msalConfig: Configuration = {
     auth: {

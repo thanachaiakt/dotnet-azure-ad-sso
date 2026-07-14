@@ -8,8 +8,10 @@ import { SigninOidc } from './pages/SigninOidc';
 import { ProtectedRoute, SignoutCallback, LoggedOut, AutoLogin } from '@sso/shared-ui';
 
 function App() {
+    const basename = window.location.port === '5173' ? '/product' : undefined;
+
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={basename}>
             <AutoLogin loginRequest={loginRequest} />
             <Routes>
                 <Route path="/" element={<Layout />}>
