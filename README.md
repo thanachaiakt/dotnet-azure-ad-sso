@@ -173,6 +173,48 @@ dotnet run --launch-profile http
 
 ---
 
+## 🧪 Running Tests
+
+The backend test suite is written using **xUnit** to test the API controllers, middlewares, and filters.
+
+### Run All Tests
+From the workspace root directory, you can run all tests in the solution:
+```bash
+dotnet test
+```
+
+### Run Specific Test Projects
+To run tests for a specific API service, navigate to its test folder and run `dotnet test`:
+
+* **Authentication API Tests:**
+  ```bash
+  cd api/tests/Authentication.Tests
+  dotnet test
+  ```
+* **Product API Tests:**
+  ```bash
+  cd api/tests/Product.Tests
+  dotnet test
+  ```
+
+### Run Specific Tests (Filtering)
+You can filter tests by class or method name using the `--filter` option:
+```bash
+# Run only AuthControllerTests
+dotnet test --filter "FullyQualifiedName~AuthControllerTests"
+
+# Run a specific test method
+dotnet test --filter "FullyQualifiedName~AuthControllerTests.GetMe_ReturnsSuccess"
+```
+
+### Code Coverage
+The test projects are pre-configured with `coverlet.collector`. To collect code coverage data, run:
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+---
+
 ## 🔒 Security Guidelines
 1. **Never Commit Secrets**: The `.env` and `appsettings.json` files are already specified in `.gitignore`. For security reasons, do not commit production values to Git.
 2. **Azure AD Enterprise App Registration**: Verify that the **Redirect URIs** in Microsoft Entra ID (Azure Portal) match the ports actually used (e.g., `http://localhost:5173/signin-oidc` and `http://localhost:5174/signin-oidc`).
