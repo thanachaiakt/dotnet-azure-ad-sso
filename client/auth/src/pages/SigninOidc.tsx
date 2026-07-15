@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { type AuthenticationResult } from "@azure/msal-browser";
-import { SigninCallback } from '@sso/shared-ui';
+import { SigninCallback } from '@sso/shared';
 
 const API_BASE = "http://localhost:5000/api";
 

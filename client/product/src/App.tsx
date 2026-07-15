@@ -5,7 +5,7 @@ import { Home } from './pages/Home';
 import { ProductListingPage } from './pages/ProductListingPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { SigninOidc } from './pages/SigninOidc';
-import { ProtectedRoute, SignoutCallback, LoggedOut, AutoLogin } from '@sso/shared-ui';
+import { ProtectedRoute, SignoutCallback, LoggedOut, AutoLogin } from '@sso/shared';
 
 function App() {
     const basename = window.location.port === '5173' ? '/product' : undefined;

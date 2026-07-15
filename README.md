@@ -14,10 +14,13 @@ dotnet-azure-ad-sso/
 │   └── src/
 │       ├── authentication/         # Authentication API (Port 5000/5001)
 │       └── product/                # Product API (Port 5001/7001)
-├── client/                        # Main Client application (Port 5173)
-├── product-client/                # Product Client application (Port 5174)
-├── shared-ui/                     # Shared UI Components library
-├── package.json                   # Root configuration for npm workspaces
+├── client/                        # Main Frontend folder (npm workspaces)
+│   ├── auth/                      # Authentication/Main Client application (Port 5173)
+│   ├── product/                   # Product Client application (Port 5174)
+│   ├── shared/                    # Shared UI Components library
+│   ├── package.json               # Configuration for npm workspaces
+│   ├── package-lock.json
+│   └── .gitignore
 └── README.md                      # ไฟล์คู่มือนี้
 ```
 
@@ -27,8 +30,8 @@ dotnet-azure-ad-sso/
 
 ก่อนเริ่มรันบริการต่าง ๆ ให้คัดลอกไฟล์ตัวอย่างและใส่ค่าคอนฟิกให้ถูกต้อง **(ห้ามนำรหัสผ่านหรือคีย์สำคัญจริงเก็บไว้ใน Git)**
 
-### 1. Client App (client/)
-สร้างไฟล์ `client/.env` จากต้นแบบ `client/.env-example`:
+### 1. Client App (client/auth/)
+สร้างไฟล์ `client/auth/.env` จากต้นแบบ `client/auth/.env-example`:
 ```bash
 VITE_APP_CLIENT_ID=<YOUR_AZURE_AD_CLIENT_ID>
 VITE_APP_TENANT_ID=<YOUR_AZURE_AD_TENANT_ID>
@@ -37,8 +40,8 @@ VITE_APP_POST_LOGOUT_REDIRECT_URI=http://localhost:5173/logged-out
 VITE_APP_API_ENDPOINT=http://localhost:5000
 ```
 
-### 2. Product Client App (product-client/)
-สร้างไฟล์ `product-client/.env` จากต้นแบบ `product-client/.env-example`:
+### 2. Product Client App (client/product/)
+สร้างไฟล์ `client/product/.env` จากต้นแบบ `client/product/.env-example`:
 ```bash
 VITE_APP_CLIENT_ID=<YOUR_AZURE_AD_CLIENT_ID>
 VITE_APP_TENANT_ID=<YOUR_AZURE_AD_TENANT_ID>
@@ -108,9 +111,10 @@ VITE_APP_PRODUCT_API_ENDPOINT=http://localhost:5001
 ## 🚀 ขั้นตอนการติดตั้งและรันระบบ (Installation & Run Guide)
 
 ### 1. ติดตั้ง Dependencies สำหรับ Frontend (npm workspaces)
-เนื่องจากระบบใช้ npm workspaces จัดการ frontend projects ให้เรียกใช้คำสั่งติดตั้งที่โฟลเดอร์ root ของโปรเจกต์:
+เนื่องจากระบบใช้ npm workspaces จัดการ frontend projects ให้เรียกใช้คำสั่งติดตั้งที่โฟลเดอร์ client/ ของโปรเจกต์:
 ```bash
-# ติดตั้ง dependencies สำหรับ client, product-client และ shared-ui ทั้งหมด
+# สลับไปยังโฟลเดอร์ client และติดตั้ง dependencies ทั้งหมด
+cd client
 npm install
 ```
 
@@ -118,24 +122,26 @@ npm install
 
 สามารถเริ่มโปรเจกต์สำหรับ Development Mode ได้สองวิธี:
 
-#### วิธีที่ 1: รันจาก Root Directory ด้วย npm workspace
+#### วิธีที่ 1: รันจาก Client Directory ด้วย npm workspace
 ```bash
+cd client
+
 # รัน Main Client (Port 5173)
-npm run dev --workspace=client
+npm run dev --workspace=auth
 
 # รัน Product Client (Port 5174)
-npm run dev --workspace=product-client
+npm run dev --workspace=product
 ```
 
 #### วิธีที่ 2: เข้าไปรันที่โฟลเดอร์ของแอปโดยตรง
 *   **สำหรับ Main Client:**
     ```bash
-    cd client
+    cd client/auth
     npm run dev
     ```
 *   **สำหรับ Product Client:**
     ```bash
-    cd product-client
+    cd client/product
     npm run dev
     ```
 

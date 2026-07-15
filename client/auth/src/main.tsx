@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { msalConfig } from "./authConfig";
-import { ThemeProvider } from "@sso/shared-ui";
+import { ThemeProvider } from "@sso/shared";
 import './index.css'
 import App from './App.tsx'
 

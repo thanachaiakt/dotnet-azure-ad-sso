@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { type AuthenticationResult } from "@azure/msal-browser";
-import { SigninCallback } from '@sso/shared-ui';
+import { SigninCallback } from '@sso/shared';
 
 export const SigninOidc = () => {
     const navigate = useNavigate();

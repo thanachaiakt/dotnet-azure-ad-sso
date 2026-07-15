@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import { loginRequest } from "../authConfig";
-import { GlobalLoading, Navbar, ThemeToggle } from "@sso/shared-ui";
-import type { NavbarLink } from "@sso/shared-ui";
+import { GlobalLoading, Navbar, ThemeToggle } from "@sso/shared";
+import type { NavbarLink } from "@sso/shared";
 
 export const Layout = () => {
     const navigate = useNavigate();

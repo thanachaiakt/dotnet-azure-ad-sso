@@ -1,9 +1,0 @@
-{
-  "name": "dotnet-azure-ad-sso",
-  "private": true,
-  "workspaces": [
-    "client",
-    "product-client",
-    "shared-ui"
-  ]
-}
