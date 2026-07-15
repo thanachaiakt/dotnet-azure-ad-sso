@@ -1,0 +1,76 @@
+name: CD
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-api:
+    name: Build and Publish APIs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Publish Authentication API
+        run: dotnet publish api/src/authentication/authentication.csproj --configuration Release --output ./publish/authentication --no-restore
+
+      - name: Publish Product API
+        run: dotnet publish api/src/product/Product.csproj --configuration Release --output ./publish/product --no-restore
+
+      - name: Upload Authentication API Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: authentication-api
+          path: ./publish/authentication
+
+      - name: Upload Product API Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-api
+          path: ./publish/product
+
+  build-client:
+    name: Build Client Apps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build Clients
+        working-directory: client
+        run: npm run build
+
+      - name: Upload Authentication Client Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: authentication-client
+          path: client/auth/dist
+
+      - name: Upload Product Client Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-client
+          path: client/product/dist

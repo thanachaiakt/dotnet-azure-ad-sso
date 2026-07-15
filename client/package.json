@@ -5,5 +5,9 @@
     "auth",
     "product",
     "shared"
-  ]
+  ],
+  "scripts": {
+    "lint": "npm run lint --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  }
 }
