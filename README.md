@@ -1,13 +1,13 @@
-# คู่มือการตั้งค่าและการรันระบบ (Setup & Running Guide)
+# Setup & Running Guide
 
-คู่มือนี้แนะนำวิธีการตั้งค่าสภาพแวดล้อม (Environment Variables), โครงสร้างโปรเจกต์ และขั้นตอนการรันบริการทั้งหมดในระบบ โดยแบ่งออกเป็น **Frontend Client (React/Vite)** และ **Backend API (.NET Core)**
+This guide describes how to configure environment variables, project structure, and run all services in the system. The system is split into the **Frontend Client (React/Vite)** and the **Backend API (.NET Core)**.
 
 ![alt text](documents/overview-auth.png)
 ![alt text](documents/overview-product.png)
 
 ---
 
-## 📁 โครงสร้างโปรเจกต์ (Project Structure)
+## 📁 Project Structure
 ```text
 dotnet-azure-ad-sso/
 ├── api/                           # Backend APIs (.NET)
@@ -21,17 +21,17 @@ dotnet-azure-ad-sso/
 │   ├── package.json               # Configuration for npm workspaces
 │   ├── package-lock.json
 │   └── .gitignore
-└── README.md                      # ไฟล์คู่มือนี้
+└── README.md                      # This guide file
 ```
 
 ---
 
-## ⚙️ การตั้งค่าสภาพแวดล้อม (Environment Configuration)
+## ⚙️ Environment Configuration
 
-ก่อนเริ่มรันบริการต่าง ๆ ให้คัดลอกไฟล์ตัวอย่างและใส่ค่าคอนฟิกให้ถูกต้อง **(ห้ามนำรหัสผ่านหรือคีย์สำคัญจริงเก็บไว้ใน Git)**
+Before starting any services, copy the template files and fill in the configuration values correctly. **(Do not store passwords or sensitive keys in Git)**
 
 ### 1. Client App (client/auth/)
-สร้างไฟล์ `client/auth/.env` จากต้นแบบ `client/auth/.env-example`:
+Create the file `client/auth/.env` from the template `client/auth/.env-example`:
 ```bash
 VITE_APP_CLIENT_ID=<YOUR_AZURE_AD_CLIENT_ID>
 VITE_APP_TENANT_ID=<YOUR_AZURE_AD_TENANT_ID>
@@ -41,7 +41,7 @@ VITE_APP_API_ENDPOINT=http://localhost:5000
 ```
 
 ### 2. Product Client App (client/product/)
-สร้างไฟล์ `client/product/.env` จากต้นแบบ `client/product/.env-example`:
+Create the file `client/product/.env` from the template `client/product/.env-example`:
 ```bash
 VITE_APP_CLIENT_ID=<YOUR_AZURE_AD_CLIENT_ID>
 VITE_APP_TENANT_ID=<YOUR_AZURE_AD_TENANT_ID>
@@ -51,7 +51,7 @@ VITE_APP_PRODUCT_API_ENDPOINT=http://localhost:5001
 ```
 
 ### 3. Authentication API (api/src/authentication/)
-สร้างไฟล์ `api/src/authentication/appsettings.json` จากต้นแบบ `appsettings-example.json`:
+Create the file `api/src/authentication/appsettings.json` from the template `appsettings-example.json`:
 ```json
 {
   "Logging": {
@@ -87,7 +87,7 @@ VITE_APP_PRODUCT_API_ENDPOINT=http://localhost:5001
 ```
 
 ### 4. Product API (api/src/product/)
-สร้างไฟล์ `api/src/product/appsettings.json` จากต้นแบบ `appsettings-example.json`:
+Create the file `api/src/product/appsettings.json` from the template `appsettings-example.json`:
 ```json
 {
   "Logging": {
@@ -108,38 +108,38 @@ VITE_APP_PRODUCT_API_ENDPOINT=http://localhost:5001
 
 ---
 
-## 🚀 ขั้นตอนการติดตั้งและรันระบบ (Installation & Run Guide)
+## 🚀 Installation & Run Guide
 
-### 1. ติดตั้ง Dependencies สำหรับ Frontend (npm workspaces)
-เนื่องจากระบบใช้ npm workspaces จัดการ frontend projects ให้เรียกใช้คำสั่งติดตั้งที่โฟลเดอร์ client/ ของโปรเจกต์:
+### 1. Install Dependencies for Frontend (npm workspaces)
+Since the project uses npm workspaces to manage frontend projects, run the installation command from the `client/` folder of the project:
 ```bash
-# สลับไปยังโฟลเดอร์ client และติดตั้ง dependencies ทั้งหมด
+# Switch to client folder and install all dependencies
 cd client
 npm install
 ```
 
-### 2. วิธีการรัน Frontend Client
+### 2. How to Run Frontend Client
 
-สามารถเริ่มโปรเจกต์สำหรับ Development Mode ได้สองวิธี:
+You can start the project in Development Mode in two ways:
 
-#### วิธีที่ 1: รันจาก Client Directory ด้วย npm workspace
+#### Option 1: Run from the Client Directory using npm workspace
 ```bash
 cd client
 
-# รัน Main Client (Port 5173)
+# Run Main Client (Port 5173)
 npm run dev --workspace=auth
 
-# รัน Product Client (Port 5174)
+# Run Product Client (Port 5174)
 npm run dev --workspace=product
 ```
 
-#### วิธีที่ 2: เข้าไปรันที่โฟลเดอร์ของแอปโดยตรง
-*   **สำหรับ Main Client:**
+#### Option 2: Run directly in the application folder
+*   **For Main Client:**
     ```bash
     cd client/auth
     npm run dev
     ```
-*   **สำหรับ Product Client:**
+*   **For Product Client:**
     ```bash
     cd client/product
     npm run dev
@@ -147,38 +147,38 @@ npm run dev --workspace=product
 
 ---
 
-### 3. วิธีการรัน Backend API (.NET)
+### 3. How to Run Backend API (.NET)
 
-ให้รันโปรเจกต์ .NET ในช่วงการพัฒนา (Development Mode) โดยใช้ CLI หรือ IDE:
+Run the .NET project in Development Mode using CLI or an IDE:
 
-#### รัน Authentication API (Port 5000 / 5001)
+#### Run Authentication API (Port 5000 / 5001)
 ```bash
 cd api/src/authentication
 dotnet run
 ```
-หรือรันแบบระบุ Profile จาก `launchSettings.json`:
+Or run with a specific profile from `launchSettings.json`:
 ```bash
 dotnet run --launch-profile http
 ```
 
-#### รัน Product API (Port 5001 / 7001)
+#### Run Product API (Port 5001 / 7001)
 ```bash
 cd api/src/product
 dotnet run
 ```
-หรือรันแบบระบุ Profile จาก `launchSettings.json`:
+Or run with a specific profile from `launchSettings.json`:
 ```bash
 dotnet run --launch-profile http
 ```
 
 ---
 
-## 🔒 ข้อมูลความปลอดภัย (Security Guidelines)
-1. **ห้าม Commit ข้อมูลสำคัญ**: ไฟล์ `.env` และ `appsettings.json` มีการระบุไว้ใน `.gitignore` แล้ว เพื่อความปลอดภัยไม่ควรอัปเดตค่าจริงเข้าสู่ระบบ Git
-2. **Azure AD Enterprise App Registration**: ตรวจสอบการตั้งค่า **Redirect URIs** บน Microsoft Entra ID (Azure Portal) ให้สอดคล้องกับค่า Port ที่ใช้จริง (เช่น `http://localhost:5173/signin-oidc` และ `http://localhost:5174/signin-oidc`)
-3. **Front-Channel Logout**: ตรวจสอบให้มั่นใจว่าตั้งค่า Front-channel logout URL บน Azure AD เพื่อรองรับ Single Sign-Out ข้ามแอปพลิเคชันอย่างสมบูรณ์
+## 🔒 Security Guidelines
+1. **Never Commit Secrets**: The `.env` and `appsettings.json` files are already specified in `.gitignore`. For security reasons, do not commit production values to Git.
+2. **Azure AD Enterprise App Registration**: Verify that the **Redirect URIs** in Microsoft Entra ID (Azure Portal) match the ports actually used (e.g., `http://localhost:5173/signin-oidc` and `http://localhost:5174/signin-oidc`).
+3. **Front-Channel Logout**: Ensure that the Front-channel logout URL is configured on Azure AD to fully support Single Sign-Out across applications.
 
-## ตัวอย่างการ setup azure ad
+## Azure AD Setup Example
 
 ![alt text](documents/azure-ad-redirect-uri.png)
 
