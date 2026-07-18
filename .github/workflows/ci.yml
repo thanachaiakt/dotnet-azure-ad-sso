@@ -21,10 +21,10 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore api/dotnet-azure-ad-sso.slnx
 
       - name: Run Tests
-        run: dotnet test --configuration Release --no-restore
+        run: dotnet test api/dotnet-azure-ad-sso.slnx --configuration Release --no-restore
 
   client-lint:
     name: Run Client Lint Check
